@@ -1,0 +1,438 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+;background = #282A2E
+background = #00000000
+background-alt = #373B41
+foreground = #C5C8C6
+foreground-alt = #858886
+primary = #F0C674
+secondary = #8ABEB7
+alert = #A54242
+;disabled = #707880
+danger = #eb3d3d
+disabled = #2a2e36
+circle = #D03a3e46 
+circle2 = #B5303030
+[bar/example]
+width = 98%
+offset-x = 1%
+height = 24pt
+radius = 6
+; dpi = 96
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+
+underline-size = 7px
+overline-size = 5px
+
+border-size = 4px
+border-color = #00000000
+padding-left = 0
+padding-right = 1px
+
+module-margin = 0
+
+separator = ""
+separator-foreground = ${colors.disabled}
+
+font-0 = MesloLGS NF:size=11;2
+font-1 = MesloLGS NF:size=20;2
+modules-left = empty-space round-left xworkspaces round-right empty-space i3 empty-space round-left2 xwindow round-right2
+modules-right = round-left date empty-space2 backlight empty-space2 pulseaudio empty-space2 xkeyboard empty-space2 memory empty-space2 cpu empty-space2 battery empty-space2 wlan empty-space2 empty-space2 empty-space2 empty-space2 empty-space2 round-right
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+enable-ipc = true
+
+override-redirect = true
+
+tray-position = right
+tray-detached = true
+tray-offset-x = -25px
+tray-offset-y = 0
+tray-background = #D03a3e46
+; wm-restack = generic
+; wm-restack = bspwm
+wm-restack = i3
+
+; override-redirect = true
+
+[module/round-left]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle}
+
+[module/round-right]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle}
+
+[module/round-left2]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle2}
+
+[module/round-right2]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle2}
+
+
+[module/empty-space]
+type = custom/text
+content = "  "
+
+
+[module/empty-space2]
+type = custom/text
+content = "  "
+content-underline = ${colors.background}
+content-overline = ${colors.background}
+content-background = ${colors.circle}
+
+[module/xworkspaces]
+type = internal/xworkspaces
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+format-foreground = ${colors.foreground-alt}
+
+label-active = %name%
+;label-active-background = ${colors.background-alt}
+;label-active-underline= ${colors.primary}
+label-active-foreground = ${colors.foreground}
+label-active-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+;label-occupied-background = ${colors.circle}
+label-occupied-foreground = ${colors.foreground-alt}
+
+label-urgent = %name%
+;label-urgent-background = ${colors.circle}
+label-urgent-padding = 1
+
+label-empty = %name%
+label-empty-foreground = ${colors.disabled}
+label-empty-padding = 1
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:60:...%
+format-background = ${colors.circle2}
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#F0C674}%mountpoint%%{F-} %percentage_used%%
+
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.disabled}
+
+
+[module/backlight]
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+; Use the `/sys/class/backlight/.../actual-brightness` file
+; rather than the regular `brightness` file.
+; Defaults to true unless the specified card is an amdgpu backlight.
+; New in version 3.6.0
+use-actual-brightness = true
+
+; Enable changing the backlight with the scroll wheel
+; NOTE: This may require additional configuration on some systems. Polybar will
+; write to `/sys/class/backlight/${self.card}/brightness` which requires polybar
+; to have write access to that file.
+; DO NOT RUN POLYBAR AS ROOT. 
+; The recommended way is to add the user to the
+; `video` group and give that group write-privileges for the `brightness` file.
+; See the ArchWiki for more information:
+; https://wiki.archlinux.org/index.php/Backlight#ACPI
+; Default: false
+enable-scroll = true
+
+format = <bar>
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume-underline = ${colors.background}
+format-volume-overline = ${colors.background}
+format-volume-background = ${colors.circle}
+
+format-volume-prefix = "VOL "
+format-volume-prefix-foreground = ${colors.primary}
+format-volume = <label-volume>
+
+label-volume = %percentage%%
+
+label-muted = muted
+label-muted-foreground = ${colors.disabled}
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+blacklist-0 = num lock
+
+label-layout = %layout%
+label-layout-foreground = ${colors.primary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-foreground = ${colors.background}
+label-indicator-background = ${colors.secondary}
+
+[module/memory]
+type = internal/memory
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+interval = 2
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.primary}
+label = %percentage_used:2%%
+
+[module/cpu]
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+type = internal/cpu
+interval = 2
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.primary}
+label = %percentage:2%%
+
+[network-base]
+type = internal/network
+
+format-connected-underline = ${colors.background}
+format-connected-overline = ${colors.background}
+format-connected-background = ${colors.circle}
+
+interval = 5
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
+
+[module/wlan]
+
+inherit = network-base
+interface-type = wireless
+label-connected = %{A1:nm-connection-editor:} %{F#F0C674}Wifi%{F-} %essid% %local_ip%%{A} 
+
+[module/eth]
+inherit = network-base
+interface-type = wired
+label-connected = %{F#F0C674}%ifname%%{F-} %local_ip%
+
+[module/date]
+type = internal/date
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+interval = 1
+
+date = %H:%M
+date-alt = %Y-%m-%d %H:%M:%S
+
+label = %date%
+label-foreground = ${colors.primary}
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = true
+
+[module/battery]
+type = internal/battery
+format-discharging-underline = ${colors.background}
+format-discharging-overline = ${colors.background}
+format-discharging-background = ${colors.circle}
+
+
+format-charging-underline = ${colors.background}
+format-charging-overline = ${colors.background}
+format-charging-background = ${colors.circle}
+
+; This is useful in case the battery never reports 100% charge
+; Default: 100
+full-at = 90
+
+; format-low once this charge percentage is reached
+; Default: 10
+; New in version 3.6.0
+low-at = 10
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+; custom shizz
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity> <label-full>
+
+; Format used when battery level drops to low-at
+; If not defined, format-discharging is used instead.
+; Available tags:
+;   <label-low>
+;   <animation-low>
+;   <bar-capacity>
+;   <ramp-capacity>
+; New in version 3.6.0
+;format-low = <label-low> <animation-low>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging = %percentage%% %time%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging = %percentage%% %time%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+label-full = Fully charged
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+; New in version 3.6.0
+label-low = BATTERY LOW
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+; Only applies if <animation-low> is used
+; New in version 3.6.0
+; animation-low-0 = !
+; animation-low-1 = 
+; animation-low-framerate = 200
+
+[module/i3]
+type = internal/i3
+
+
+format-prefix = %{T2}%{T-}
+format-prefix-foreground = ${colors.danger}
+format-suffix = %{T2}%{T-}
+format-suffix-foreground = ${colors.danger}
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+
+format = <label-mode>
+label-mode-background = ${colors.danger}
+
