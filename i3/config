@@ -102,6 +102,8 @@ bindsym $mod+Shift+Space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+p focus mode_toggle
 
+
+
 # focus the parent container
 # bindsym $mod+a focus parent
 
@@ -153,9 +155,10 @@ bindsym $mod+Shift+r restart
 
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-mode "exit: [L]ogout, [R]eboot, [S]hutdown, [H]ibernate" {
+mode "exit: [E] Lock, [L]ogout, [R]eboot, [S]hutdown, [H]ibernate" {
   
-  
+  bindsym e exec lock, mode "default"
+
   bindsym l exec i3-msg exit, mode "default"
 
   bindsym r exec systemctl reboot, mode "default"
@@ -170,7 +173,7 @@ mode "exit: [L]ogout, [R]eboot, [S]hutdown, [H]ibernate" {
 
 }
 
-bindsym $mod+Shift+e mode "exit: [L]ogout, [R]eboot, [S]hutdown, [H]ibernate"
+bindsym $mod+Shift+e mode "exit: [E] Lock, [L]ogout, [R]eboot, [S]hutdown, [H]ibernate"
 # resize window (you can also use the mouse for that)
 
 mode "resize" {
@@ -199,6 +202,17 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+##############################
+#	  COLORS	     #
+##############################
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #555555
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
 
 
 # CUSTOM SHITS
@@ -206,8 +220,8 @@ bindsym $mod+r mode "resize"
 # Floating windows
 
 for_window [title="Tidal-hifi - settings"] floating enable
-
-
+for_window [class="Galculator"] floating enable
+for_window [class="Main.py"] floating enable
 ###############################
 #  	    APPS  	      #
 ###############################
@@ -256,9 +270,9 @@ bindsym $mod+z mode "[Z] Terminal, [F]irefox, [D]iscord, [O]ffice"
 for_window [class=".*"] border pixel 3
 gaps inner 8
 gaps outer 0
-gaps top 30
-gaps left 14
-gaps right 14
+gaps top 10
+gaps left 0
+gaps right 0
 # Smart borders (draw borders around container only if it is not the only container on this workspace) 
 smart_borders on
 
@@ -320,7 +334,10 @@ bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 # Polybar
-exec_always --no-startup-id ~/.config/i3/polybar.sh &
+# exec_always --no-startup-id ~/.config/i3/polybar.sh &
+
+exec_always --no-startup-id ~/.config/polybar/forest/forest.sh &
+
 exec --no-startup-id nitrogen --restore
 
 # Keyboard layout
@@ -337,7 +354,8 @@ bindsym $mod+a exec imv /home/tekam/Pictures/horaire.png
 bindsym $mod+o exec --no-startup-id picom-trans -c --toggle 95
 # Virtual machine
 
-
+# Polkit
+exec --no-startup-id lxpolkit &
 
 # Touchpad
 exec xinput set-prop "DELL097D:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1

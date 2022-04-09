@@ -17,369 +17,422 @@
 ;==========================================================
 
 [colors]
-background = ${xrdb:background}
-;foreground = #676b73 
-foreground = ${xrdb:foreground}
-
-color0 = ${xrdb:color0}
-color1 = ${xrdb:color1}
-color2 = ${xrdb:color2}
-color3 = ${xrdb:color3}
-color4 = ${xrdb:color4}
-color5 = ${xrdb:color5}
-color6 = ${xrdb:color6}
-color7 = ${xrdb:color7}
-color8 = ${xrdb:color8}
-color9 = ${xrdb:color9}
-color10 = ${xrdb:color10}
-color11 = ${xrdb:color11}
-color12 = ${xrdb:color12}
-color13 = ${xrdb:color13}
-color14 = ${xrdb:color14}
-color15 = ${xrdb:color15}
-dark-light = #272A2B 
-active-light = #313435
-
-[bar/test]
-tray-position = right
-monitor = eDP-1
-width =  100%
-height = 18
-padding-left =1
-padding-right =0
+;background = #282A2E
+background = #00000000
+background-alt = #373B41
+foreground = #C5C8C6
+foreground-alt = #858886
+primary = #F0C674
+secondary = #8ABEB7
+alert = #A54242
+;disabled = #707880
+danger = #eb3d3d
+disabled = #2a2e36
+circle = #D03a3e46 
+circle2 = #B5303030
+[bar/example]
+width = 100%
+offset-x = 0%
+height = 24pt
+radius = 6
+; dpi = 96
 
 background = ${colors.background}
 foreground = ${colors.foreground}
-bottom = false
-border-top-size = 5
-border-bottom-size = 5
-border-top-color = ${colors.background}
-border-bottom-color = ${colors.background}
-
-line-size = 1
-wm-restack = bspwm
-
-modules-left = round-left bspwm round-right empty-space  round-left polywins round-right 
-;mpd_i mpd
-modules-center = title
-modules-right = pulseaudio round-left cpu round-right updates wlan mem xbacklight round-left time  round-right battery  powermenu
-font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=11;3
-font-1 = JetBrainsMono Nerd Font:size=14;4
-font-2 = Material Design Icons:style=Bold:size=9;3
-;font-3 = unifont:fontformat=truetype:size=9;3
-font-3 = Font Awesome 5 Free:style=Solid:size=9;2
-font-4 = Font Awesome 5 Free:style=Regular:size=9;2
-font-5 = Font Awesome 5 Brands:style=Regular:size=9;2
-font-6 = MesloLGS NF:style=Regular:size=9;2
 
 
+underline-size = 7px
+overline-size = 5px
 
-[module/polywins]
-type = custom/script
-exec = ~/.config/polybar/scripts/polywins.sh 2>/dev/null
-format = <label>
-format-background = #2a2e36
-label = %output%
-label-padding = 0
-tail = true
+border-size = 4px
+border-color = #00000000
+padding-left = 0
+padding-right = 1px
+
+module-margin = 0
+
+separator = ""
+separator-foreground = ${colors.disabled}
+
+font-0 = MesloLGS NF:size=11;2
+font-1 = MesloLGS NF:size=20;2
+modules-left = round-left xworkspaces round-right empty-space i3 empty-space round-left2 xwindow round-right2
+modules-right = round-left date empty-space2 backlight empty-space2 pulseaudio empty-space2 xkeyboard empty-space2 memory empty-space2 cpu empty-space2 battery empty-space2 wlan empty-space2 empty-space2 empty-space2 empty-space2 empty-space2 round-right
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+enable-ipc = true
+
+override-redirect = true
+
+tray-position = right
+tray-detached = true
+tray-offset-x = -25px
+tray-offset-y = 0
+tray-background = #D03a3e46
+; wm-restack = generic
+; wm-restack = bspwm
+wm-restack = i3
+
+; override-redirect = true
+
+[module/round-left]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle}
+
+[module/round-right]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle}
+
+[module/round-left2]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle2}
+
+[module/round-right2]
+type = custom/text
+content = %{T2}%{T-}
+content-foreground = ${colors.circle2}
+
 
 [module/empty-space]
 type = custom/text
 content = "  "
 
-[module/round-left]
+
+[module/empty-space2]
 type = custom/text
-content = %{T3}%{T-}
-content-foreground = #2a2e36
+content = "  "
+content-underline = ${colors.background}
+content-overline = ${colors.background}
+content-background = ${colors.circle}
 
-[module/round-right]
-type = custom/text
-content = %{T3}%{T-}
-content-foreground = #2a2e36
+[module/xworkspaces]
+type = internal/xworkspaces
 
-[module/roundd-left]
-type = custom/text
-content = %{T3}%{T-}
-content-foreground = #a3be8c 
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+format-foreground = ${colors.foreground-alt}
 
-[module/roundd-right]
-type = custom/text
-content = %{T3}%{T-}
-content-foreground = #a3be8c
+label-active = %name%
+;label-active-background = ${colors.background-alt}
+;label-active-underline= ${colors.primary}
+label-active-foreground = ${colors.foreground}
+label-active-padding = 1
 
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 70
-
-format = <ramp> <label>
-format-warn = <ramp> <label-warn>
-format-padding = 1
-label = %temperature%
-label-warn = %temperature%
-ramp-0 =  "󰜗" 
-ramp-font = 3
-ramp-foreground = #a4ebf3
-
-
-[module/bspwm]
-type = internal/bspwm
-
-pin-workspaces = true
-inline-mode = true
-enable-click = true
-enable-scroll = true
-reverse-scroll = false
-
-format = <label-state>
-
-ws-icon-0 = I;%{F#e3a5f5}
-ws-icon-1 = II;%{F#F9DE8F}  
-ws-icon-2 = III;%{F#ff9b93}   
-ws-icon-3 = IV;%{F#95e1d3}    
-ws-icon-4 = V;%{F#81A1C1}
-ws-icon-5 = VI;%{F#A3BE8C}
-ws-icon-6 = VII;%{F#E4BF7B}
-ws-icon-7 = VIII;%{F#E06C75}
-
-label-separator = " "
-label-separator-background = #2a2e36
-
-;label-focused =  %icon%  
-label-focused = %icon%  
-label-focused-foreground = ${colors.foreground}
-label-focused-padding = 2
-;label-focused-background = #464a52
-label-focused-background = #2a2e36
-label-focused-margin = 0 
-
-label-occupied = %icon%  
-label-occupied-foreground = #646870  
-label-occupied-background = #2a2e36
+label-occupied = %name%
 label-occupied-padding = 1
-label-occupied-margin = 0
+;label-occupied-background = ${colors.circle}
+label-occupied-foreground = ${colors.foreground-alt}
 
-label-empty = %icon%
-label-empty-foreground =   ${colors.foreground}
-label-empty-padding = 1
-label-empty-background = #2a2e36
-label-empty-margin = 0 
-
-
-label-urgent = %icon%
-label-urgent-foreground = #88C0D0
-label-urgent-background = #2a2e36
+label-urgent = %name%
+;label-urgent-background = ${colors.circle}
 label-urgent-padding = 1
 
-;[module/alsa]
-;type = internal/alsa
-[module/pulseaudio]
-type = internal/pulseaudio
-
-sink = alsa_output.pci-0000_12_00.3.analog-stereo
-use-ui-max = true
-
-interval = 5
-format-volume = <label-volume> <bar-volume>
-label-volume = " "  
-label-volume-foreground = ${colors.foreground}
-format-muted-foreground = ${colors.foreground}
-label-muted =  MUDO
-
-format-muted-padding = 1
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #61afef
-bar-volume-foreground-1 = #61afef
-bar-volume-foreground-2 = #61afef
-bar-volume-foreground-3 = #61afef
-bar-volume-foreground-4 = #61afef
-bar-volume-foreground-5 = #61afef
-bar-volume-foreground-6 = #61afef
-bar-volume-gradient = false
-bar-volume-indicator = 
-bar-volume-indicator-foreground = #61afef
-bar-volume-indicator-font = 2
-bar-volume-fill = ━ 
-bar-volume-fill-foreground = #61afef
-bar-volume-fill-font = 2
-bar-volume-empty = ━
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = #565c64
-format-volume-padding = 2
-
-[module/time]
-type = internal/date
-interval = 60
-
-format = <label>
-format-background = #2a2e36
-format-foreground = #82868e
-
-;date = 󰥔 %H:%M%{F-}
-date =  %H:%M%{F-}
-;time-alt = 󰃭 %a, %b %d%{F-}
-time-alt =  %a, %b %d%{F-}
-
-label = %date%%time%
-
-[module/mem]
-type = internal/memory
-interval = 2
-;format = <bar-used> <label>
-;format-background = ${colors.foreground}
-format-foreground = ${colors.foreground}
-label = "  %mb_used% -"
-label-padding = 1
-;bar-used-width = 1
-;bar-used-indicator =
-;bar-used-fill = ━
-;bar-used-empty = ┉
-
-[module/updates]
-type = custom/script
-;exec = doas xbps-install -S > /dev/null 2>&1; xbps-updates
-exec = echo "TERROO"
-format = <label>
-interval = 4600 
-;label =  %output%  
-label = %output%  
-label-padding = 2
-label-foreground = #BF616A
-
-[module/powermenu]
-type = custom/text 
-content =" " 
-content-padding = 2
-click-left = bash /home/marcos/.config/rofi/scripts/menu_powermenu.sh
-content-foreground = #f25287
-
-[module/wlan]
-type = internal/network
-interface = wlp2s0
-interval = 3.0
-format-connected =  <label-connected>
-;label-connected = "󰤪  " 
-label-connected = "  " 
-label-connected-foreground = #A3BE8C 
-
-[module/battery]
-type = internal/battery
-battery = BAT1
-adapter = AC0
-full-at = 98
-
-format-charging = <animation-charging> <label-charging>
-label-charging = %percentage%%
-format-charging-foreground = ${colors.color4}
-format-charging-background = ${colors.background}
-
-format-discharging = <ramp-capacity> <label-discharging>
-label-discharging = %percentage%%
-format-discharging-foreground = ${colors.foreground}
-format-discharging-background = ${colors.background}
-
-format-full-prefix = "  "
-format-full-prefix-foreground = #A0E8A2
-format-foreground = ${colors.color4}
-format-background = ${colors.background}
-
-label-discharging-foreground = ${colors.foreground}
-ramp-capacity-foreground =  #A0E8A2  
-label-charging-foreground = ${colors.foreground}
-
-label-padding = 1
-
-ramp-capacity-0 = "  " 
-ramp-capacity-1 = "  " 
-ramp-capacity-2 = "  " 
-ramp-capacity-3 = "  " 
-ramp-capacity-4 = "  "
-
-
-animation-charging-0 = "  " 
-animation-charging-1 = "  " 
-animation-charging-2 = "  " 
-animation-charging-3 = "  " 
-animation-charging-4 = "  "
-
-
-animation-charging-foreground = #DF8890
-animation-charging-framerate = 750
-
-format-charging-padding = 1
-format-discharging-padding = 1
-
-[module/volume]
-type = custom/script
-exec = amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'
-format = <label>
-internal = 5.0
-label = %output% 
-label-foreground = #BF616A
-label-padding = 1
-
-[module/xbacklight]
-type = internal/xbacklight
-format = <label>
-format-prefix = "  "
-label = %percentage%
-format-prefix-foreground = #61afef
-label-foreground =   #D8DEE9
-format-padding = 1
-
-[module/cpu]
-type = internal/cpu
-interval = 2.5
-
-format-prefix ="  " 
-format =  <label> 
-
-label = CPU %percentage%%
-format-background = #2a2e36
-format-foreground = #989cff
+label-empty = %name%
+label-empty-foreground = ${colors.disabled}
+label-empty-padding = 1
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...
+label = %title:0:60:...%
+format-background = ${colors.circle2}
+[module/filesystem]
+type = internal/fs
+interval = 25
 
-[module/title]
-type = internal/xwindow
+mount-0 = /
 
-format = <label>
-format-foreground = ${color.fg-alt}
+label-mounted = %{F#F0C674}%mountpoint%%{F-} %percentage_used%%
 
-label =   %title%
-label-maxlen = 30 ...
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.disabled}
 
-[module/mpd]
-type = internal/mpd
+
+[module/backlight]
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+; Use the `/sys/class/backlight/.../actual-brightness` file
+; rather than the regular `brightness` file.
+; Defaults to true unless the specified card is an amdgpu backlight.
+; New in version 3.6.0
+use-actual-brightness = true
+
+; Enable changing the backlight with the scroll wheel
+; NOTE: This may require additional configuration on some systems. Polybar will
+; write to `/sys/class/backlight/${self.card}/brightness` which requires polybar
+; to have write access to that file.
+; DO NOT RUN POLYBAR AS ROOT. 
+; The recommended way is to add the user to the
+; `video` group and give that group write-privileges for the `brightness` file.
+; See the ArchWiki for more information:
+; https://wiki.archlinux.org/index.php/Backlight#ACPI
+; Default: false
+enable-scroll = true
+
+format = <bar>
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume-underline = ${colors.background}
+format-volume-overline = ${colors.background}
+format-volume-background = ${colors.circle}
+
+format-volume-prefix = "VOL "
+format-volume-prefix-foreground = ${colors.primary}
+format-volume = <label-volume>
+
+label-volume = %percentage%%
+
+label-muted = muted
+label-muted-foreground = ${colors.disabled}
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+blacklist-0 = num lock
+
+label-layout = %layout%
+label-layout-foreground = ${colors.primary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-foreground = ${colors.background}
+label-indicator-background = ${colors.secondary}
+
+[module/memory]
+type = internal/memory
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
 
 interval = 2
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.primary}
+label = %percentage_used:2%%
 
-format-online = <label-song> <icon-next>
-format-online-foreground = #C578DC
-format-online-padding = 1
+[module/cpu]
 
-label-song =  "%title%-%artist%"
-label-song-maxlen = 20
-label-song-ellipsis = true
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
 
-label-offline = "MPD is offline"
-
-icon-play = 
-icon-pause = 
-icon-stop =  
-icon-prev = 
-icon-next = 
-
-[module/mpd_i]
-type = internal/mpd
+type = internal/cpu
 interval = 2
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.primary}
+label = %percentage:2%%
 
-format-online = <toggle>
-format-online-foreground = #E4BF7B
-format-online-padding = 2
-icon-play = 
-icon-pause = 
+[network-base]
+type = internal/network
+
+format-connected-underline = ${colors.background}
+format-connected-overline = ${colors.background}
+format-connected-background = ${colors.circle}
+
+interval = 5
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
+
+[module/wlan]
+
+inherit = network-base
+interface-type = wireless
+label-connected = %{A1:nm-connection-editor:} %{F#F0C674}Wifi%{F-} %essid% %local_ip%%{A} 
+
+[module/eth]
+inherit = network-base
+interface-type = wired
+label-connected = %{F#F0C674}%ifname%%{F-} %local_ip%
+
+[module/date]
+type = internal/date
+
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+format-background = ${colors.circle}
+
+interval = 1
+
+date = %H:%M
+date-alt = %Y-%m-%d %H:%M:%S
+
+label = %date%
+label-foreground = ${colors.primary}
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = true
+
+[module/battery]
+type = internal/battery
+format-discharging-underline = ${colors.background}
+format-discharging-overline = ${colors.background}
+format-discharging-background = ${colors.circle}
+
+
+format-charging-underline = ${colors.background}
+format-charging-overline = ${colors.background}
+format-charging-background = ${colors.circle}
+
+; This is useful in case the battery never reports 100% charge
+; Default: 100
+full-at = 90
+
+; format-low once this charge percentage is reached
+; Default: 10
+; New in version 3.6.0
+low-at = 10
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+; custom shizz
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity> <label-full>
+
+; Format used when battery level drops to low-at
+; If not defined, format-discharging is used instead.
+; Available tags:
+;   <label-low>
+;   <animation-low>
+;   <bar-capacity>
+;   <ramp-capacity>
+; New in version 3.6.0
+;format-low = <label-low> <animation-low>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging = %percentage%% %time%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging = %percentage%% %time%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+label-full = Fully charged
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+; New in version 3.6.0
+label-low = BATTERY LOW
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+; Only applies if <animation-low> is used
+; New in version 3.6.0
+; animation-low-0 = !
+; animation-low-1 = 
+; animation-low-framerate = 200
+
+[module/i3]
+type = internal/i3
+
+
+format-prefix = %{T2}%{T-}
+format-prefix-foreground = ${colors.danger}
+format-suffix = %{T2}%{T-}
+format-suffix-foreground = ${colors.danger}
+format-underline = ${colors.background}
+format-overline = ${colors.background}
+
+format = <label-mode>
+label-mode-background = ${colors.danger}
 
